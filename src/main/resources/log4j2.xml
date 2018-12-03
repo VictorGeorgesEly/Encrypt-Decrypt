@@ -1,14 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Configuration status="INFO">
-    <Appenders>
-        <Console name="console" target="SYSTEM_OUT">
-            <PatternLayout
-                    pattern="[%-5level] %d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %c{1} - %msg%n" />
-        </Console>
-    </Appenders>
-    <Loggers>
-        <Root level="debug" additivity="false">
-            <AppenderRef ref="console" />
-        </Root>
-    </Loggers>
+<Configuration status="info">
+	<Properties>
+		<Property name="basePath">../logs</Property>
+	</Properties>
+
+	<Appenders>
+		<RollingFile name="fileLogger" fileName="${basePath}/encryp-decrypt.log" filePattern="${basePath}/encryp-decrypt-%d{yyyy-MM-dd}.log">
+			<PatternLayout>
+				<pattern>[%-5level] %d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %c{1} - %msg%n</pattern>
+			</PatternLayout>
+			<Policies>
+				<TimeBasedTriggeringPolicy interval="1"	modulate="true" />
+				<SizeBasedTriggeringPolicy size="100MB" />
+			</Policies>
+		</RollingFile>
+
+		<Console name="console" target="SYSTEM_OUT">
+			<PatternLayout>
+				<pattern>[%-5level] %d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %c{1} - %msg%n</pattern>
+			</PatternLayout>
+		</Console>
+	</Appenders>
+
+	<Loggers>
+		<Root level="info" additivity="false">
+			<appender-ref ref="console" />
+			<appender-ref ref="fileLogger" />
+		</Root>
+	</Loggers>
 </Configuration>
